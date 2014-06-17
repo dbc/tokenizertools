@@ -274,7 +274,7 @@ a lookahead lexer could be constructed by simply instantiating
 
 A more convenient lookahead lexer is provided by the class ``TokenizeAhead``,
 which is a specialization of the ``lookaheadtools.Lookahead`` class. 
-``TokenizeAhead`` provides to additional methods:
+``TokenizeAhead`` provides two additional methods:
 
 * consume(require=None)
 * accept(require)
@@ -320,7 +320,7 @@ to use the new lexer. ::
       except StopIteration:
           try:
               curLexer = lexerStack.pop()
-          except ????:
+          except IndexError:
               break
 
 Practical Recursive-Decent Parsing
@@ -329,7 +329,7 @@ Practical Recursive-Decent Parsing
 Here is one possible approach to recursive decent parsing. ::
 
   # Make a look-ahead tokenizer.
-  tokenSource = la.Lookahead(MyLexer(someFile))
+  tokenSource = TokenizeAhead(MyLexer(someFile))
 
   # Make classes for abstract syntax tree nodes.
   # Each class is self-parsing, via the classmethod parse().
