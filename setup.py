@@ -21,7 +21,7 @@ class veryclean(Command):
         os.system('rm -rf testfile.txt tests/testfile.txt')
         os.system('rm -rf build')
         os.system('rm -rf dist')
-        os.system('rm -rf lookaheadtools.egg-info')
+        os.system('rm -rf *.egg-info')
 
 setup(
     name = 'tokenizertools',
