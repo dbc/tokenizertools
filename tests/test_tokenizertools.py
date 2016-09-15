@@ -96,7 +96,7 @@ def compute_begin(s, lexpos):
         ns = 0
     else:
         ns = None
-    return tkn,ns
+    return tkn, ns
 
 class Lexer03(tt.RegexTokenizer):
     "Lexer with computed start states and a multi-state rule."
@@ -184,10 +184,12 @@ class TestRegex_02(ut.TestCase):
                 next(it)
 
 class TestRegex_03(ut.TestCase):
+
     def setUp(self):
         self.testFileName = 'testfile.txt'
         with open(self.testFileName,'w') as f:
             f.write(file3text)
+
     def test_computed_states(self):
         with open(self.testFileName) as f:
             it = Lexer03(f, f.name)
@@ -208,9 +210,17 @@ class TestRegex_03(ut.TestCase):
             with self.assertRaises(StopIteration):
                 next(it)
 
+    def test_bad_state(self):
+        with open(self.testFileName) as f:
+            it = Lexer03(f, f.name)
+            tkn = next(it)
+            self.assertEqual(tkn, Token('ID','abc',tt.Lexpos(1,0,0,f.name)))
+            with self.assertRaises(ValueError):
+                it.begin('foo')
+
 class TestRegex_04(ut.TestCase):
     def test_inMemoryString(self):
         f = [ln + '\n' for ln in file1text.splitlines()]
-    
+
 if __name__ == '__main__':
     ut.main()

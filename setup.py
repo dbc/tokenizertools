@@ -1,8 +1,7 @@
 from setuptools import setup,Command,os
-from setuptools.command import sdist
-
 # Disable setup's overly-eager file finding.
-sdist.finders[:]
+import setuptools.command.sdist as _sdist
+
 
 def read(filename):
     return open(os.path.join(os.path.dirname(__file__), filename)).read() 
@@ -10,10 +9,13 @@ def read(filename):
 class veryclean(Command):
     description = 'Delete any non-source file.'
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
         import os
         os.system('rm -rf *.html docs/*.html')
@@ -26,7 +28,7 @@ class veryclean(Command):
 setup(
     name = 'tokenizertools',
     cmdclass = {'veryclean':veryclean},
-    version = '0.1a',
+    version = '1.0',
     description = 'Implements lexical analyzers as iterators yielding tokens.',
     author = 'David B. Curtis',
     author_email = 'davecurtis@sonic.net',

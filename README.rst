@@ -9,7 +9,6 @@ Classes provided:
 
 * Tokenizer -- Base class.
 * RegexTokenizer -- Python re-based tokenizer.
-* FlexTokenizer -- Interface to flex-based tokenizer.
 * TokenizeAhead -- A look-ahead iterator that can wrap any tokenizer.
 
 Overview
@@ -39,9 +38,9 @@ list of rules. ::
   import tokenizertools as tt
   class MyTokenizer(tt.RegexTokenizer):
       spec = [
-          (r'[a-zA-Z][a-zA-Z0-9_]*',Token.typeIdent), # idents and keywords
-          (r'[0-9]+\.[0-9]+',Token.typeFloat), # floats
-          (r'[0-9]+', Token.typeInt), # ints
+          (r'[a-zA-Z][a-zA-Z0-9_]*',Token.type_ident), # idents and keywords
+          (r'[0-9]+\.[0-9]+',Token.type_float), # floats
+          (r'[0-9]+', Token.type_int), # ints
           (r'\s*',None), # ignore white space
       ]
 
@@ -52,5 +51,5 @@ of the first instance.::
 
   tokenizer = MyTokenizer()
   with open('foo.bar') as f:
-      tokenStream = Lookahead(tokenizer.lex(f, f.name))
-      compiledStuff = myParser.parse(tokenStream)
+      token_stream = Lookahead(tokenizer.lex(f, f.name))
+      compiled_stuff = my_parser.parse(token_stream)
